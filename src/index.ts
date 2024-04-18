@@ -23,9 +23,7 @@ app.use(async (c, next) => {
   await next()
 })
 
-const insertSchema = createInsertSchema(posts, {
-  id: z.undefined()
-})
+const insertSchema = createInsertSchema(posts)
 
 const routes = app
   .get('/', async (c) => {
@@ -33,9 +31,8 @@ const routes = app
     return c.json(results)
   })
   .post('/', zValidator('form', insertSchema), async (c) => {
-    const { text } = c.req.valid('form')
-    const id = crypto.randomUUID()
-    const results = await c.var.db.insert(posts).values({ id, text }).returning()
+    const data = c.req.valid('form')
+    const results = await c.var.db.insert(posts).values(data).returning()
     return c.json(results[0])
   })
   .get(
@@ -48,7 +45,10 @@ const routes = app
     ),
     async (c) => {
       const { id } = c.req.valid('param')
-      const results = await c.var.db.select().from(posts).where(eq(posts.id, id))
+      const results = await c.var.db
+        .select()
+        .from(posts)
+        .where(eq(posts.id, Number(id)))
       return c.json(results[0])
     }
   )
