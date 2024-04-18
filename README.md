@@ -11,6 +11,10 @@ This project shows how we test an application built on Cloudflare Workers with C
 - Vitest - Test runner
 - `@cloudflare/vitest-pool-workers` - Simulator for Cloudflare Environment
 
+## Demo
+
+https://github.com/yusukebe/testing-d1-app-with-types/assets/10682/7589e8b6-9035-4714-9de7-6af15303de4d
+
 ## Author
 
 Yusuke Wada <https://github.com/yusukebe>
